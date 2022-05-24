@@ -1,6 +1,7 @@
 // Imports
-const express = require('express');
-const userCtrl = require('./Routes/usersController');
+var express = require('express');
+var userCtrl = require('./Routes/usersController');
+var messageCtrl = require('./Routes/messageController');
 
 // Router
 exports.router = (() => {
@@ -11,6 +12,10 @@ exports.router = (() => {
     apiRouter.route('/users/login/').post(userCtrl.login);
     apiRouter.route('/users/profil/').get(userCtrl.getUserProfile);
     apiRouter.route('/users/profil/').put(userCtrl.updateUserProfile);
+
+    // Message Router
+    apiRouter.route('/messages/new/').post(messageCtrl.createMessage);
+    apiRouter.route('/messages/').get(messageCtrl.listMessages);
 
     return apiRouter;
 })();

@@ -165,8 +165,7 @@ module.exports = {
         // Geting auth header
         var headerAuth = req.headers['authorization'];
         var userId = jwtUtils.getUserId(headerAuth);
-        console.log(headerAuth);
-        console.log(userId);
+
         if (userId < 0) {
             return res.status(400).json({
                 'error': 'Invalid authorization'
