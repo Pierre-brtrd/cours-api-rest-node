@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql
+    container_name: db_node_api
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - db-api-node-data:/var/lib/mysql
+    ports:
+      - 5000:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpMyAdmin_node_api
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8090:80
+    environment:
+      PMA_HOST: db
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app_api_node
+    restart: always
+    volumes:
+      - .:/app:rw
+    ports:
+      - 8080:8080
+
+volumes:
+  db-api-node-data: null
