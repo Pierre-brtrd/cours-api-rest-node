@@ -1,14 +1,16 @@
 // Imports
 const express = require('express');
-const usesCtrl = require('./Routes/usersController');
+const userCtrl = require('./Routes/usersController');
 
 // Router
 exports.router = (() => {
     const apiRouter = express.Router();
 
     // User Router
-    apiRouter.route('/users/register/').post(usesCtrl.register);
-    apiRouter.route('/users/login/').post(usesCtrl.login);
+    apiRouter.route('/users/register/').post(userCtrl.register);
+    apiRouter.route('/users/login/').post(userCtrl.login);
+    apiRouter.route('/users/profil/').get(userCtrl.getUserProfile);
+    apiRouter.route('/users/profil/').put(userCtrl.updateUserProfile);
 
     return apiRouter;
 })();
