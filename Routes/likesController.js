@@ -79,7 +79,6 @@ module.exports = {
                         .then((alreadyLikeFound) => {
                             done(null, messageFound, userFound);
                         }).catch((error) => {
-                            console.log(error);
                             return res.status(500).json({
                                 'error': 'Unable to set reaction'
                             });
