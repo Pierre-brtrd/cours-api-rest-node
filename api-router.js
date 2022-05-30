@@ -2,6 +2,7 @@
 var express = require('express');
 var userCtrl = require('./Routes/usersController');
 var messageCtrl = require('./Routes/messageController');
+var likeCtrl = require('./Routes/likesController');
 
 // Router
 exports.router = (() => {
@@ -16,6 +17,10 @@ exports.router = (() => {
     // Message Router
     apiRouter.route('/messages/new/').post(messageCtrl.createMessage);
     apiRouter.route('/messages/').get(messageCtrl.listMessages);
+
+    // Likes Router
+    apiRouter.route('/messages/:messageId/vote/like').post(likeCtrl.likePost);
+    apiRouter.route('/messages/:messageId/vote/dislike').post(likeCtrl.dislikePost);
 
     return apiRouter;
 })();
