@@ -10,6 +10,7 @@ const CONTENT_LIMIT = 4;
 // Routes
 module.exports = {
     createMessage: (req, res) => {
+        console.log(req);
         // Geting auth header
         var headerAuth = req.headers['authorization'];
         var userId = jwtUtils.getUserId(headerAuth);
@@ -17,6 +18,7 @@ module.exports = {
         // Params
         var title = req.body.title;
         var content = req.body.content;
+        let categoryId = req.body.categoryId;
 
         console.log(req.body);
         if (title == null || content == null) {
@@ -51,7 +53,8 @@ module.exports = {
                         title: title,
                         content: content,
                         likes: 0,
-                        UserId: userFound.id
+                        UserId: userFound.id,
+                        CategoryId: categoryId
                     }).then((newMessage) => {
                         done(newMessage);
                     });
@@ -82,10 +85,16 @@ module.exports = {
             attributes: (fields !== '*' && fields != null) ? fields.split(', ') : null,
             limit: (!isNaN(limit)) ? limit : null,
             offset: (!isNaN(offset)) ? offset : null,
-            include: [{
-                model: models.User,
-                attributes: ['username']
-            }]
+            include: [
+                {
+                    association: 'user',
+                    attributes: ['username'],
+                },
+                {
+                    model: models.Category,
+                    attributes: ['nom']
+                }
+            ]
         }).then((messages) => {
             if (messages) {
                 return res.status(200).json(messages);
@@ -97,7 +106,8 @@ module.exports = {
         }).catch((err) => {
             console.log(err);
             return res.status(500).json({
-                'error': 'Invalid fields'
+                'error': 'Invalid fields',
+                "message": err
             });
         })
     }

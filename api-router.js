@@ -3,6 +3,7 @@ var express = require('express');
 var userCtrl = require('./Routes/usersController');
 var messageCtrl = require('./Routes/messageController');
 var likeCtrl = require('./Routes/likesController');
+var tagCtrl = require('./Routes/categoryController');
 
 // Router
 exports.router = (() => {
@@ -21,6 +22,10 @@ exports.router = (() => {
     // Likes Router
     apiRouter.route('/messages/:messageId/vote/like').post(likeCtrl.likePost);
     apiRouter.route('/messages/:messageId/vote/dislike').post(likeCtrl.dislikePost);
+
+    // Tags routes
+    apiRouter.route('/tags/create/').post(tagCtrl.createTag);
+    apiRouter.route('/tags/').get(tagCtrl.listTags);
 
     return apiRouter;
 })();

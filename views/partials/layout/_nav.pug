@@ -1,19 +1,25 @@
-nav.navbar.navbar-dark.bg-primary.navbar-expand
-    .container
-        a.navbar-brand(href='#') API Rest Node
-        ul.navbar-nav.mr-auto
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+    div.container-fluid
+        a.navbar-brand(href='/') API Rest Node
+        ul.navbar-nav.me-auto.mb-2.mb-lg-0
             li.nav-item
-                a.nav-link(href='#')
+                a.nav-link(href='/')
                     span Home
             li.nav-item
-                a.nav-link(href='#')
-                    span About
+                a.nav-link(href='/liste-messages')
+                    span Liste des messages
+
             li.nav-item
-                a.nav-link(href='#')
-                    span Menu
+                a.nav-link(href='/create-message')
+                    span Créer un message
+
             li.nav-item
-                a.nav-link(href='#')
-                    span Contact
+                a.nav-link(href='/create-category')
+                    span Créer une catégorie
+
+            li.nav-item
+                a.nav-link(href='/profil')
+                    span Profil
         span.navbar-text
-            a.nav-link(href='#')
+            a.nav-link(href='/login')
                 span  Login

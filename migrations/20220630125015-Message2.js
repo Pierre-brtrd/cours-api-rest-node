@@ -16,16 +16,20 @@ module.exports = {
           key: 'id'
         }
       },
+      categoryId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Categories',
+          key: 'id'
+        }
+      },
       title: {
         allowNull: false,
         type: Sequelize.STRING
       },
       content: {
         allowNull: false,
-        type: Sequelize.STRING
-      },
-      attachment: {
-        allowNull: true,
         type: Sequelize.STRING
       },
       likes: {

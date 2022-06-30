@@ -47,11 +47,11 @@ module.exports = {
         asyncLib.waterfall([
             function (done) {
                 models.User.findOne({
-                        attributes: ['email'],
-                        where: {
-                            email: email
-                        }
-                    })
+                    attributes: ['email'],
+                    where: {
+                        email: email
+                    }
+                })
                     .then((userFound) => {
                         done(null, userFound);
                     })
@@ -74,12 +74,12 @@ module.exports = {
             },
             function (userFound, hashPassword, done) {
                 var newUser = models.User.create({
-                        email: email,
-                        username: username,
-                        password: hashPassword,
-                        bio: bio,
-                        isAdmin: 0
-                    })
+                    email: email,
+                    username: username,
+                    password: hashPassword,
+                    bio: bio,
+                    isAdmin: 0
+                })
                     .then((newUser) => {
                         done(newUser);
                     })
@@ -115,10 +115,10 @@ module.exports = {
         asyncLib.waterfall([
             function (done) {
                 models.User.findOne({
-                        where: {
-                            email: email
-                        }
-                    })
+                    where: {
+                        email: email
+                    }
+                })
                     .then((userFound) => {
                         done(null, userFound);
                     })
@@ -179,7 +179,7 @@ module.exports = {
             },
         }).then((user) => {
             if (user) {
-                res.status(201).json(user);
+                res.status(200).json(user);
             } else {
                 res.status(404).json({
                     'error': 'User not found'
@@ -202,13 +202,13 @@ module.exports = {
         asyncLib.waterfall([
             (done) => {
                 models.User.findOne({
-                        attributes: ['id', 'bio'],
-                        where: {
-                            id: userId
-                        },
-                    }).then((userFound) => {
-                        done(null, userFound);
-                    })
+                    attributes: ['id', 'bio'],
+                    where: {
+                        id: userId
+                    },
+                }).then((userFound) => {
+                    done(null, userFound);
+                })
                     .catch((err) => {
                         return res.status(500).json({
                             'error': 'Unable to verify User identity'

@@ -1,0 +1,22 @@
+extends layout.pug
+
+block content
+    section
+        h1= heading
+        div.mt-4
+            form.form.card.p-3#form-create-message
+                div.mb-3
+                    label(for="title", required).form-label.required Titre:
+                    input(type="text" name="title").form-control.required#title
+
+                div.mb-3
+                    label(for="content", required).form-label.required Contenu:
+                    textarea(name="content", cols="30", rows="10").form-control.required#content
+
+                div.mb-3
+                    label(for="categoryId", required).form-label Catégorie
+                    select(name='categoryId').form-select.mb-3s#categoryId
+
+                button(type="submit").btn.btn-primary Envoyer
+
+                

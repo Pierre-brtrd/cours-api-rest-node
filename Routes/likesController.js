@@ -44,7 +44,8 @@ module.exports = {
                         done(null, messageFound, userFound);
                     }).catch((error) => {
                         return res.status(500).json({
-                            'error': 'Unable to verify user'
+                            'error': 'Unable to verify user',
+                            'message': error
                         });
                     })
                 } else {
@@ -77,38 +78,50 @@ module.exports = {
                 if (!isUserAlreadyLike) {
                     messageFound.addUser(userFound)
                         .then((alreadyLikeFound) => {
-                            done(null, messageFound, userFound);
+                            done(null, messageFound, userFound, true);
                         }).catch((error) => {
                             return res.status(500).json({
                                 'error': 'Unable to set reaction'
                             });
                         })
                 } else {
-                    return res.status(409).json({
-                        'error': 'message already liked'
-                    });
+                    isUserAlreadyLike.destroy()
+                        .then(() => {
+                            done(null, messageFound, userFound, false);
+                        }).catch((error) => {
+                            return res.status(500).json({
+                                'error': 'Cannot remove liked'
+                            });
+                        })
                 }
             },
-            (messageFound, userFound, done) => {
-                messageFound.update({
-                    likes: messageFound.likes + 1,
-                }).then(() => {
-                    done(messageFound);
-                }).catch((error) => {
-                    console.log(error);
-                    return res.status(500).json({
-                        'error': 'Cannot update message like counter'
-                    });
-                })
+            (messageFound, userFound, isUserAlreadyLike, done) => {
+                if (isUserAlreadyLike) {
+                    messageFound.update({
+                        likes: messageFound.likes + 1,
+                    }).then(() => {
+                        done(messageFound);
+                    }).catch((error) => {
+                        console.log(error);
+                        return res.status(500).json({
+                            'error': 'Cannot update message like counter'
+                        });
+                    })
+                } else {
+                    messageFound.update({
+                        likes: messageFound.likes - 1,
+                    }).then(() => {
+                        done(messageFound);
+                    }).catch((error) => {
+                        return res.status(500).json({
+                            'error': 'Cannot update message like counter'
+                        });
+                    })
+                }
+
             }
         ], (messageFound) => {
-            if (messageFound) {
-                return res.status(200).json(messageFound);
-            } else {
-                return res.status(500).json({
-                    'error': 'Cannot update message'
-                });
-            }
+            return res.status(200).json(messageFound);
         });
     },
     dislikePost: (req, res) => {

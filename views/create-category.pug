@@ -1,0 +1,14 @@
+extends layout.pug
+
+block content
+    section
+        h1= heading
+        div.mt-4
+            form.form.card.p-3#form-create-category
+                div.mb-3
+                    label(for="nom", required).form-label.required Catégorie:
+                    input(type="text" name="categorie").form-control.required#categorie
+
+                button(type="submit").btn.btn-primary Envoyer
+
+                

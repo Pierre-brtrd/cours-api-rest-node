@@ -1,0 +1,17 @@
+extends layout.pug
+
+block content
+    section
+        h2.text-center= heading
+        div.mt-4
+            form.form.card.p-3.w-50.mx-auto#form-login
+                div.mb-3
+                    label(for="email", required).form-label.required Email:
+                    input(type="email" name="email").form-control.required#email
+
+                div.mb-3
+                    label(for="password", required).form-label.required Mot de passe:
+                    input(name="password", type="password").form-control.required#password
+
+
+                button(type="submit").btn.btn-primary Envoyer
