@@ -1,8 +1,9 @@
 'use strict';
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const apiRouter = require('./api-router').router;
+var express = require('express');
+var bodyParser = require('body-parser');
+var path = require('path');
+var apiRouter = require('./api-router').router;
 
 // Constants
 const PORT = 8080;
@@ -15,10 +16,18 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-// Configuration Route
+// Template engine
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, "public")));
+
+// Route configuration
 app.get('/', (req, res) => {
-    res.setHeader('Content-Type', 'text/html')
-    res.status(200).send("<h1>Bienvenue son mon serveur API Node");
+    res.render('index', {
+        subject: 'Application APIRest Node',
+        name: 'Page d\'accueil',
+        link: 'https://google.com',
+    })
 });
 
 // Utilisation du routeur API
