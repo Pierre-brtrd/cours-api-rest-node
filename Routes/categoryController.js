@@ -80,7 +80,7 @@ module.exports = {
                 return res.status(200).json(tags);
             } else {
                 return res.status(404).json({
-                    'error': 'No messages found'
+                    'error': 'No tags found'
                 });
             }
         }).catch((err) => {
